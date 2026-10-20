@@ -84,7 +84,51 @@ const validatePropertySubmission = [
     .isLength({ max: 3000 })
 ];
 
+const validateBuyerRegistration = [
+  body('name')
+    .notEmpty()
+    .trim()
+    .isLength({ max: 200 }),
+
+  body('phone')
+    .notEmpty()
+    .trim()
+    .isLength({ max: 50 }),
+
+  body('email')
+    .isEmail()
+    .normalizeEmail(),
+
+  body('preferredLocations')
+    .optional({ values: 'falsy' }),
+
+  body('budget')
+    .optional({ values: 'falsy' })
+    .isFloat({ min: 0 }),
+
+  body('purchasePurpose')
+    .optional({ values: 'falsy' })
+    .trim()
+    .isLength({ max: 500 }),
+
+  body('timeline')
+    .optional({ values: 'falsy' })
+    .trim()
+    .isLength({ max: 200 }),
+
+  body('financingStatus')
+    .optional({ values: 'falsy' })
+    .trim()
+    .isLength({ max: 200 }),
+
+  body('preferredPropertyType')
+    .optional({ values: 'falsy' })
+    .trim()
+    .isLength({ max: 200 })
+];
+
 module.exports = {
   validatePropertySubmission,
+  validateBuyerRegistration,
   handleValidationErrors
 };
