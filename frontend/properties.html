@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Properties - MERD Landmark Properties</title>
+  <meta name="description" content="Browse our curated collection of property opportunities including residential, commercial, industrial, and investment properties.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <div class="navbar">
+      <div class="navbar-brand">🏢 MERD Landmark Properties</div>
+      <button class="navbar-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="navbar-menu">
+        <a href="index.html">HOME</a>
+        <a href="properties.html" class="active">PROPERTIES</a>
+        <a href="acquisition.html">ACQUISITION</a>
+        <a href="investment.html">INVESTMENTS</a>
+        <a href="submit-property.html">SUBMIT PROPERTY</a>
+        <a href="buyer-registration.html">REGISTER</a>
+        <a href="about.html">ABOUT</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+      <div class="navbar-cta">
+        <a href="buyer-registration.html" class="btn btn-primary">Register as Buyer</a>
+        <a href="submit-property.html" class="btn btn-gold">Submit Property</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Property Marketplace</h1>
+      <p>Explore curated opportunities across residential, commercial, industrial, and investment properties</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container mt-xl mb-xl">
+    <div class="row-2">
+      <!-- Filters Sidebar -->
+      <aside>
+        <div class="card" style="position: sticky; top: 100px;">
+          <div class="card-header">Filter Properties</div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Search</label>
+              <input type="text" class="form-control" id="searchInput" placeholder="Property title or description">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Property Type</label>
+              <select class="form-control" id="propertyType">
+                <option value="">All Types</option>
+                <option value="Residential">Residential</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Land">Land</option>
+                <option value="Industrial">Industrial</option>
+                <option value="Mixed-use">Mixed-use</option>
+                <option value="Development opportunity">Development Opportunity</option>
+                <option value="Investment opportunity">Investment Opportunity</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Location</label>
+              <input type="text" class="form-control" id="location" placeholder="City or area">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Min Price (₦)</label>
+              <input type="number" class="form-control" id="minPrice" placeholder="Minimum price">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">Max Price (₦)</label>
+              <input type="number" class="form-control" id="maxPrice" placeholder="Maximum price">
+            </div>
+            
+            <button class="btn btn-primary" id="filterBtn" style="width: 100%;">Apply Filters</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Properties Grid -->
+      <main>
+        <div id="propertiesGrid" class="row-3">
+          <div style="grid-column: 1 / -1; text-align: center;">
+            <div class="spinner" style="margin: 2rem auto;"></div>
+          </div>
+        </div>
+        
+        <div id="pagination" class="mt-xl" style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>MERD Landmark Properties</h4>
+        <p>Connecting capital with the right property opportunities through research-driven, transparent real estate acquisition.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="properties.html">Properties</a>
+        <a href="buyer-registration.html">Register as Buyer</a>
+        <a href="submit-property.html">Submit Property</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p><strong>Phone:</strong></p>
+        <a href="tel:+2348100650205">+234 810 065 0205</a>
+        <a href="tel:+2349022245981">+234 902 224 5981</a>
+        <p class="mt-sm"><strong>Email:</strong></p>
+        <a href="mailto:connect@merdlandmarkproperties.com">connect@merdlandmarkproperties.com</a>
+                       <p class="mt-sm"><strong>Instagram:</strong></p>
+        <a href="https://www.instagram.com/merdlandmarkproperties?igsi=M2xmMXBsaDVnanFi">Connect Through Instagram</a>
+        <p class="mt-sm"><strong>Facebook:</strong></p>
+        <a href="https://www.facebook.com/share/19PWRNwPws/">Connect Through Facebook</a>
+      </div>
+      <div class="footer-section">
+        <h4>Company Promise</h4>
+        <p>"We don't simply show you properties. We help you understand the opportunity behind them."</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 MERD Landmark Properties Ltd. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/properties.js"></script>
+</body>
+</html>

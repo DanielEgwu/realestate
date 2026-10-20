@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Property - MERD Landmark Properties</title>
+  <meta name="description" content="Submit your property to our acquisition network. Reach qualified buyers and investors.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <div class="navbar">
+      <div class="navbar-brand">🏢 MERD Landmark Properties</div>
+      <button class="navbar-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="navbar-menu">
+        <a href="index.html">HOME</a>
+        <a href="properties.html">PROPERTIES</a>
+        <a href="acquisition.html">ACQUISITION</a>
+        <a href="investment.html">INVESTMENTS</a>
+        <a href="submit-property.html" class="active">SUBMIT PROPERTY</a>
+        <a href="buyer-registration.html">REGISTER</a>
+        <a href="about.html">ABOUT</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+      <div class="navbar-cta">
+        <a href="buyer-registration.html" class="btn btn-primary">Register as Buyer</a>
+        <a href="submit-property.html" class="btn btn-gold">Submit Property</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Submit Your Property</h1>
+      <p>Connect with qualified buyers and investors through our acquisition network</p>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <div class="container-sm mt-xl mb-xl">
+    <div class="card">
+      <div class="card-header">Submit Your Property to Our Acquisition Network</div>
+      <form id="propertySubmissionForm" class="card-body">
+        <h3 class="mb-lg">Property Information</h3>
+        
+        <div class="form-group">
+          <label class="form-label">Property Title *</label>
+          <input type="text" class="form-control" id="propertyTitle" placeholder="e.g., Prime Commercial Space in Lagos" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Location *</label>
+          <input type="text" class="form-control" id="propertyLocation" placeholder="e.g., Victoria Island, Lagos" required>
+        </div>
+        
+        <div class="row-2">
+          <div class="form-group">
+            <label class="form-label">Asking Price (₦) *</label>
+            <input type="number" class="form-control" id="askingPrice" placeholder="0.00" step="0.01" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Property Type *</label>
+            <select class="form-control" id="propertyType" required>
+              <option value="">Select property type</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Land">Land</option>
+              <option value="Industrial">Industrial</option>
+              <option value="Mixed-use">Mixed-use</option>
+              <option value="Development opportunity">Development Opportunity</option>
+              <option value="Investment opportunity">Investment Opportunity</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Property Size (sqm)</label>
+          <input type="number" class="form-control" id="propertySize" placeholder="Square meters" step="0.01">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Description *</label>
+          <textarea class="form-control" id="propertyDescription" placeholder="Detailed description of the property, features, and investment potential..." required></textarea>
+        </div>
+
+        <!-- Key Features -->
+<div class="form-group">
+    <label for="keyFeatures">
+        Key Features <span class="required">*</span>
+    </label>
+
+    <textarea
+        id="keyFeatures"
+        name="keyFeatures"
+        rows="5"
+        placeholder="List the property's key features, e.g. 4 bedrooms, swimming pool, parking space, fenced compound, C of O..."
+        required
+    ></textarea>
+
+    <small class="form-help">
+        Highlight the most important features buyers should know about.
+    </small>
+</div>
+
+<!-- Documentation -->
+<div class="form-group">
+    <label for="documentationStatus">
+        Documentation Status <span class="required">*</span>
+    </label>
+
+    <select id="documentationStatus" name="documentationStatus" required>
+        <option value="">Select documentation status</option>
+        <option value="C of O">C of O</option>
+        <option value="Deed of Assignment">Deed of Assignment</option>
+        <option value="Governor's Consent">Governor's Consent</option>
+        <option value="Registered Survey">Registered Survey</option>
+        <option value="Building Approval">Building Approval</option>
+        <option value="Multiple Documents">Multiple Documents</option>
+        <option value="Other">Other</option>
+        <option value="Pending Documentation">Pending Documentation</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="documentationDetails">
+        Documentation Details
+    </label>
+
+    <textarea
+        id="documentationDetails"
+        name="documentationDetails"
+        rows="4"
+        placeholder="Provide additional information about the property's title and documentation..."
+    ></textarea>
+</div>
+
+<!-- Commercial Arrangement -->
+<div class="form-group">
+    <label for="referralArrangement">
+        Commission / Referral Arrangement
+    </label>
+
+    <textarea
+        id="referralArrangement"
+        name="referralArrangement"
+        rows="4"
+        placeholder="Describe the expected commission, referral arrangement, or other commercial terms..."
+    ></textarea>
+</div>
+        
+        <hr style="margin: 2rem 0;">
+        <h3 class="mb-lg">Your Information</h3>
+        
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" class="form-control" id="submitterName" placeholder="Your name" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input type="email" class="form-control" id="submitterEmail" placeholder="your@email.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Phone Number *</label>
+          <input type="tel" class="form-control" id="submitterPhone" placeholder="+234 800 000 0000" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Your Role *</label>
+          <select class="form-control" id="submitterRole" required>
+            <option value="">Select your role</option>
+            <option value="Owner">Property Owner</option>
+            <option value="Agent">Real Estate Agent</option>
+            <option value="Developer">Developer</option>
+            <option value="Broker">Broker</option>
+            <option value="Consultant">Property Consultant</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Company/Agency (if applicable)</label>
+          <input type="text" class="form-control" id="companyName" placeholder="Your company name">
+        </div>
+        
+        <hr style="margin: 2rem 0;">
+        <h3 class="mb-lg">Commercial Terms</h3>
+        
+        <div class="row-2">
+          <div class="form-group">
+            <label class="form-label">Expected Commission (%)</label>
+            <input type="number" class="form-control" id="expectedCommission" placeholder="Commission percentage" step="0.01" min="0" max="100">
+          </div>
+        </div>
+
+        <!-- Property Media & Documents -->
+<div class="form-section">
+    <h3>Property Media & Documentation</h3>
+
+    <p class="form-help">
+        Upload clear property photos, video and supporting documentation.
+        These materials will be reviewed by our acquisition team.
+    </p>
+
+    <div class="form-group">
+        <label for="propertyPhotos">
+            Property Photos
+        </label>
+
+        <input
+            type="file"
+            id="propertyPhotos"
+            name="propertyPhotos"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+        />
+
+        <small class="form-help">
+            Upload multiple clear photos of the property.
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label for="propertyVideo">
+            Property Video
+        </label>
+
+        <input
+            type="file"
+            id="propertyVideo"
+            name="propertyVideo"
+            accept="video/mp4,video/webm,video/quicktime"
+        />
+
+        <small class="form-help">
+            Optional property walkthrough or promotional video.
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label for="propertyDocuments">
+            Title / Supporting Documents
+        </label>
+
+        <input
+            type="file"
+            id="propertyDocuments"
+            name="propertyDocuments"
+            accept=".pdf,.jpg,.jpeg,.png,.webp"
+            multiple
+        />
+
+        <small class="form-help">
+            Upload title documents, surveys, approvals or other relevant documentation.
+        </small>
+    </div>
+</div>
+        
+        <button type="submit" class="btn btn-primary btn-large" style="width: 100%; margin-top: 1rem;">Submit Property</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>MERD Landmark Properties</h4>
+        <p>Connecting capital with the right property opportunities through research-driven, transparent real estate acquisition.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="properties.html">Properties</a>
+        <a href="buyer-registration.html">Register as Buyer</a>
+        <a href="submit-property.html">Submit Property</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p><strong>Phone:</strong></p>
+        <a href="tel:+2348100650205">+234 810 065 0205</a>
+        <a href="tel:+2349022245981">+234 902 224 5981</a>
+        <p class="mt-sm"><strong>Email:</strong></p>
+        <a href="mailto:connect@merdlandmarkproperties.com">connect@merdlandmarkproperties.com</a>
+                <p class="mt-sm"><strong>Instagram:</strong></p>
+        <a href="https://www.instagram.com/merdlandmarkproperties?igsi=M2xmMXBsaDVnanFi">Connect Through Instagram</a>
+        <p class="mt-sm"><strong>Facebook:</strong></p>
+        <a href="https://www.facebook.com/share/19PWRNwPws/">Connect Through Facebook</a>
+      </div>
+      <div class="footer-section">
+        <h4>Company Promise</h4>
+        <p>"We don't simply show you properties. We help you understand the opportunity behind them."</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 MERD Landmark Properties Ltd. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/property-submission.js"></script>
+</body>
+</html>

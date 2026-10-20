@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Property Submissions | MERD Admin</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .submission-card {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .submission-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .submission-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .meta-box {
+            background: var(--light-blue);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .meta-box small {
+            display: block;
+            color: var(--gray-medium);
+            margin-bottom: 5px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .details {
+            display: none;
+            border-top: 1px solid var(--border-gray);
+            margin-top: 18px;
+            padding-top: 18px;
+        }
+
+        .details.show {
+            display: block;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* ==============================
+           ATTACHMENTS
+        ============================== */
+
+        .attachments-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-gray);
+        }
+
+        .attachments-section h3 {
+            margin-bottom: 18px;
+        }
+
+        .attachment-group {
+            margin-bottom: 24px;
+        }
+
+        .attachment-group h4 {
+            margin-bottom: 12px;
+        }
+
+        .submission-photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .submission-photo-link {
+            display: block;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 1px solid var(--border-gray);
+            background: #f5f5f5;
+        }
+
+        .submission-photo {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+
+        .submission-photo-link:hover .submission-photo {
+            transform: scale(1.04);
+        }
+
+        .submission-video {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 10px;
+            background: #000;
+            display: block;
+        }
+
+        .submission-documents {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .submission-document {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            text-decoration: none;
+            background: var(--white);
+        }
+
+        .submission-document:hover {
+            background: var(--light-blue);
+        }
+
+        .no-attachments {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            color: var(--gray-medium);
+        }
+
+        .attachment-count {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: var(--light-blue);
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .submission-photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .submission-photo {
+                height: 110px;
+            }
+
+            .submission-card {
+                padding: 15px;
+            }
+        }
+
+        .submission-attachments {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-gray);
+}
+
+.attachments-list {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 1fr)
+    );
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.attachment-item {
+    background: var(--light-blue);
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.submission-photo {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.submission-video {
+    width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+
+        <div class="navbar-brand">
+            🏢 MERD Admin
+        </div>
+
+        <div class="navbar-cta">
+
+            <a
+                href="admin-dashboard.html"
+                class="btn btn-outline"
+            >
+                Dashboard
+            </a>
+
+            <button
+                class="btn btn-secondary"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+</header>
+
+
+<main class="container mt-xl mb-xl">
+
+    <h1>Property Submissions</h1>
+
+    <p class="text-secondary">
+        Review property submissions from owners, agents and property suppliers.
+    </p>
+
+
+    <div class="tabs">
+
+        <button
+            id="pendingTab"
+            class="btn btn-primary"
+            onclick="changeStatus('pending')"
+        >
+            Pending
+        </button>
+
+        <button
+            id="approvedTab"
+            class="btn btn-outline"
+            onclick="changeStatus('approved')"
+        >
+            Approved
+        </button>
+
+        <button
+            id="rejectedTab"
+            class="btn btn-outline"
+            onclick="changeStatus('rejected')"
+        >
+            Rejected
+        </button>
+
+    </div>
+
+
+    <div id="submissionsContainer">
+
+        <div class="card empty">
+            Loading submissions...
+        </div>
+
+    </div>
+
+</main>
+
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+
+
+<script>
+
+let currentStatus = 'pending';
+
+
+// ============================================
+// LOAD SUBMISSIONS
+// ============================================
+
+async function loadSubmissions() {
+
+    const container =
+        document.getElementById('submissionsContainer');
+
+    container.innerHTML = `
+        <div class="card empty">
+            Loading submissions...
+        </div>
+    `;
+
+    try {
+
+        await requireAuth();
+
+        const submissions =
+            await api.get(
+                `/admin/submissions?status=${encodeURIComponent(currentStatus)}`
+            );
+
+        if (!submissions || submissions.length === 0) {
+
+            container.innerHTML = `
+                <div class="card empty">
+
+                    <h3>
+                        No ${escapeHtml(currentStatus)}
+                        submissions
+                    </h3>
+
+                    <p class="text-secondary">
+                        There are currently no
+                        ${escapeHtml(currentStatus)}
+                        property submissions.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            submissions
+                .map(renderSubmission)
+                .join('');
+
+    } catch (error) {
+
+        console.error(
+            'Load submissions error:',
+            error
+        );
+
+        container.innerHTML = `
+            <div class="card empty">
+
+                <h3>
+                    Unable to load submissions
+                </h3>
+
+                <p class="text-secondary">
+                    ${escapeHtml(error.message)}
+                </p>
+
+            </div>
+        `;
+    }
+}
+
+
+// ============================================
+// RENDER SUBMISSION
+// ============================================
+
+function renderSubmission(submission) {
+
+    const price =
+        submission.asking_price
+            ? formatCurrency(
+                Number(submission.asking_price)
+            )
+            : 'Not provided';
+
+    const attachments =
+        Array.isArray(submission.attachments)
+            ? submission.attachments
+            : [];
+
+    return `
+
+        <div class="submission-card">
+
+            <div class="submission-header">
+
+                <div>
+
+                    <h2>
+                        ${escapeHtml(
+                            submission.title ||
+                            'Untitled Property'
+                        )}
+                    </h2>
+
+                    <p class="text-secondary">
+                        ${escapeHtml(
+                            submission.location ||
+                            'Location not provided'
+                        )}
+                    </p>
+
+                </div>
+
+                <span class="status ${getStatusClass(submission.status)}">
+                    ${escapeHtml(
+                        submission.status ||
+                        'unknown'
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="submission-meta">
+
+                <div class="meta-box">
+
+                    <small>
+                        Property Type
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            submission.property_type ||
+                            'Not provided'
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <small>
+                        Asking Price
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(price)}
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <small>
+                        Property Size
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            submission.size ||
+                            'Not provided'
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <small>
+                        Submitted By
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            submission.submitter_name ||
+                            'Not provided'
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn btn-outline"
+                    onclick="toggleDetails(${Number(submission.id)})"
+                >
+                    View Details
+                </button>
+
+
+                ${
+                    submission.status === 'pending'
+                    ?
+                    `
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="updateSubmission(
+                            ${Number(submission.id)},
+                            'approved'
+                        )"
+                    >
+                        Approve
+                    </button>
+
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="updateSubmission(
+                            ${Number(submission.id)},
+                            'rejected'
+                        )"
+                    >
+                        Reject
+                    </button>
+
+                    `
+                    :
+                    ''
+                }
+
+            </div>
+
+
+            <div
+                id="details-${Number(submission.id)}"
+                class="details"
+            >
+
+                <div class="details-grid">
+
+                    <div>
+
+                        <strong>
+                            Submitter Phone
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                submission.submitter_phone ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Submitter Email
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                submission.submitter_email ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Role
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                submission.submitter_role ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Company
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                submission.company_name ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Documentation
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                submission.documentation_status ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Commission
+                        </strong>
+
+                        <p>
+                            ${
+                                submission.expected_commission != null
+                                ?
+                                escapeHtml(
+                                    submission.expected_commission
+                                ) + '%'
+                                :
+                                'Not provided'
+                            }
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Description
+                    </strong>
+
+                    <p>
+                        ${escapeHtml(
+                            submission.description ||
+                            'Not provided'
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Key Features
+                    </strong>
+
+                    <p>
+                        ${escapeHtml(
+                            submission.key_features ||
+                            'Not provided'
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Documentation Details
+                    </strong>
+
+                    <p>
+                        ${escapeHtml(
+                            submission.documentation_details ||
+                            'Not provided'
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Referral Arrangement
+                    </strong>
+
+                    <p>
+                        ${escapeHtml(
+                            submission.referral_arrangement ||
+                            'Not provided'
+                        )}
+                    </p>
+
+                </div>
+
+
+                ${renderAttachments(attachments)}
+
+            </div>
+
+<div class="submission-attachments">
+
+    <strong>Uploaded Files</strong>
+
+    <div class="attachments-list">
+
+        ${
+            submission.attachments &&
+            submission.attachments.length > 0
+
+            ? submission.attachments.map(attachment => {
+
+                const fileUrl =
+                    attachment.file_url.startsWith('http')
+                        ? attachment.file_url
+                        : `${window.location.origin}/${attachment.file_url.replace(/\\/g, '/')}`;
+
+                if (attachment.file_type === 'photo') {
+
+                    return `
+                        <div class="attachment-item">
+
+                            <img
+                                src="${escapeHtml(fileUrl)}"
+                                alt="Property photo"
+                                class="submission-photo"
+                                loading="lazy"
+                            >
+
+                            <a
+                                href="${escapeHtml(fileUrl)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-outline">
+
+                                View Photo
+
+                            </a>
+
+                        </div>
+                    `;
+
+                }
+
+                if (attachment.file_type === 'video') {
+
+                    return `
+                        <div class="attachment-item">
+
+                            <video
+                                controls
+                                class="submission-video">
+
+                                <source
+                                    src="${escapeHtml(fileUrl)}">
+
+                                Your browser does not support
+                                video playback.
+
+                            </video>
+
+                            <a
+                                href="${escapeHtml(fileUrl)}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-outline">
+
+                                Open Video
+
+                            </a>
+
+                        </div>
+                    `;
+
+                }
+
+                return `
+                    <div class="attachment-item">
+
+                        <p>
+                            📄
+                            ${escapeHtml(
+                                attachment.file_type ||
+                                'Document'
+                            )}
+                        </p>
+
+                        <a
+                            href="${escapeHtml(fileUrl)}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-outline">
+
+                            View Document
+
+                        </a>
+
+                    </div>
+                `;
+
+            }).join('')
+
+            : `
+                <p class="text-secondary">
+                    No files were uploaded with this submission.
+                </p>
+            `
+        }
+
+    </div>
+
+</div>
+
+        </div>
+
+    `;
+}
+
+
+// ============================================
+// RENDER ATTACHMENTS
+// ============================================
+
+function renderAttachments(attachments) {
+
+    if (!attachments || attachments.length === 0) {
+
+        return `
+            <div class="attachments-section">
+
+                <h3>
+                    Property Media
+                </h3>
+
+                <div class="no-attachments">
+                    No photos, videos or documents
+                    were uploaded with this submission.
+                </div>
+
+            </div>
+        `;
+    }
+
+
+    const photos =
+        attachments.filter(
+            file => file.file_type === 'photo'
+        );
+
+    const videos =
+        attachments.filter(
+            file => file.file_type === 'video'
+        );
+
+    const documents =
+        attachments.filter(
+            file => file.file_type === 'document'
+        );
+
+
+    let html = `
+
+        <div class="attachments-section">
+
+            <h3>
+                Property Media
+                <span class="attachment-count">
+                    ${attachments.length}
+                    file${attachments.length === 1 ? '' : 's'}
+                </span>
+            </h3>
+
+    `;
+
+
+    // ============================================
+    // PHOTOS
+    // ============================================
+
+    if (photos.length > 0) {
+
+        html += `
+
+            <div class="attachment-group">
+
+                <h4>
+                    📷 Photos (${photos.length})
+                </h4>
+
+                <div class="submission-photo-grid">
+
+        `;
+
+        photos.forEach(photo => {
+
+            const url =
+                escapeAttribute(
+                    convertFilePathToUrl(
+                        photo.file_url
+                    )
+                );
+
+            html += `
+
+                <a
+                    href="${url}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="submission-photo-link"
+                >
+
+                    <img
+                        src="${url}"
+                        alt="Property photo"
+                        class="submission-photo"
+                        loading="lazy"
+                        onerror="this.style.display='none';"
+                    >
+
+                </a>
+
+            `;
+        });
+
+
+        html += `
+
+                </div>
+
+            </div>
+
+        `;
+    }
+
+
+    // ============================================
+    // VIDEOS
+    // ============================================
+
+    if (videos.length > 0) {
+
+        html += `
+
+            <div class="attachment-group">
+
+                <h4>
+                    🎥 Video (${videos.length})
+                </h4>
+
+        `;
+
+        videos.forEach(video => {
+
+            const url =
+                escapeAttribute(
+                    convertFilePathToUrl(
+                        video.file_url
+                    )
+                );
+
+            html += `
+
+                <video
+                    class="submission-video"
+                    controls
+                    preload="metadata"
+                >
+
+                    <source
+                        src="${url}"
+                    >
+
+                    Your browser does not support
+                    video playback.
+
+                </video>
+
+            `;
+        });
+
+
+        html += `
+
+            </div>
+
+        `;
+    }
+
+
+    // ============================================
+    // DOCUMENTS
+    // ============================================
+
+    if (documents.length > 0) {
+
+        html += `
+
+            <div class="attachment-group">
+
+                <h4>
+                    📄 Documents (${documents.length})
+                </h4>
+
+                <div class="submission-documents">
+
+        `;
+
+        documents.forEach((document, index) => {
+
+            const url =
+                escapeAttribute(
+                    convertFilePathToUrl(
+                        document.file_url
+                    )
+                );
+
+            html += `
+
+                <a
+                    href="${url}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="submission-document"
+                >
+
+                    📄
+                    <span>
+                        View Document ${index + 1}
+                    </span>
+
+                </a>
+
+            `;
+        });
+
+
+        html += `
+
+                </div>
+
+            </div>
+
+        `;
+    }
+
+
+    html += `
+
+        </div>
+
+    `;
+
+    return html;
+}
+
+
+// ============================================
+// CONVERT SERVER FILE PATH TO URL
+// ============================================
+
+function convertFilePathToUrl(filePath) {
+
+    if (!filePath) {
+        return '';
+    }
+
+    /*
+     * The backend currently stores file.path.
+     *
+     * Once Express exposes:
+     *
+     * /uploads/submissions
+     *
+     * this converts the stored path into
+     * a browser-accessible URL.
+     */
+
+    const normalized =
+        String(filePath)
+            .replace(/\\/g, '/');
+
+    const marker =
+        '/uploads/submissions/';
+
+    const index =
+        normalized.indexOf(marker);
+
+    if (index !== -1) {
+
+        return normalized.substring(index);
+    }
+
+    return normalized;
+}
+
+
+// ============================================
+// TOGGLE DETAILS
+// ============================================
+
+function toggleDetails(id) {
+
+    const element =
+        document.getElementById(
+            `details-${id}`
+        );
+
+    if (element) {
+
+        element.classList.toggle('show');
+
+    }
+}
+
+
+// ============================================
+// UPDATE SUBMISSION
+// ============================================
+
+async function updateSubmission(id, status) {
+
+    const action =
+        status === 'approved'
+            ? 'approve'
+            : 'reject';
+
+
+    const confirmed =
+        confirm(
+            `Are you sure you want to ${action} this submission?`
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const notes =
+        prompt(
+            'Optional review notes:',
+            ''
+        );
+
+
+    try {
+
+        await api.patch(
+            `/admin/submissions/${id}`,
+            {
+                status: status,
+                reviewNotes: notes || null
+            }
+        );
+
+
+        showNotification(
+            `Submission ${status} successfully.`,
+            'success'
+        );
+
+
+        await loadSubmissions();
+
+    } catch (error) {
+
+        console.error(
+            'Update submission error:',
+            error
+        );
+
+        showNotification(
+            `Failed to ${action} submission.`,
+            'danger'
+        );
+
+    }
+}
+
+
+// ============================================
+// CHANGE STATUS
+// ============================================
+
+function changeStatus(status) {
+
+    currentStatus = status;
+
+    updateActiveTab();
+
+    loadSubmissions();
+
+}
+
+
+// ============================================
+// ACTIVE TAB
+// ============================================
+
+function updateActiveTab() {
+
+    const tabs = {
+        pending: document.getElementById('pendingTab'),
+        approved: document.getElementById('approvedTab'),
+        rejected: document.getElementById('rejectedTab')
+    };
+
+
+    Object.entries(tabs).forEach(
+        ([status, button]) => {
+
+            if (!button) return;
+
+            if (status === currentStatus) {
+
+                button.classList.remove(
+                    'btn-outline'
+                );
+
+                button.classList.add(
+                    'btn-primary'
+                );
+
+            } else {
+
+                button.classList.remove(
+                    'btn-primary'
+                );
+
+                button.classList.add(
+                    'btn-outline'
+                );
+
+            }
+        }
+    );
+}
+
+
+// ============================================
+// STATUS CLASS
+// ============================================
+
+function getStatusClass(status) {
+
+    const allowed = [
+        'pending',
+        'approved',
+        'rejected'
+    ];
+
+    return allowed.includes(status)
+        ? status
+        : '';
+}
+
+
+// ============================================
+// HTML ESCAPING
+// ============================================
+
+function escapeHtml(value) {
+
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+
+}
+
+
+// ============================================
+// ATTRIBUTE ESCAPING
+// ============================================
+
+function escapeAttribute(value) {
+
+    return escapeHtml(value);
+}
+
+
+// ============================================
+// INITIALIZE
+// ============================================
+
+document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+
+        updateActiveTab();
+
+        loadSubmissions();
+
+    }
+);
+
+</script>
+
+</body>
+</html>

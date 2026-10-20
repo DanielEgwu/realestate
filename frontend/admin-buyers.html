@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buyer Management | MERD Admin</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .buyer-card {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .buyer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .buyer-header h2 {
+            margin-bottom: 5px;
+        }
+
+        .buyer-meta {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .meta-box {
+            background: var(--light-blue);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .meta-box small {
+            display: block;
+            color: var(--gray-medium);
+            margin-bottom: 5px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .status-new {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-contacted {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-qualified {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-closed {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .status-lost {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .details {
+            display: none;
+            border-top: 1px solid var(--border-gray);
+            margin-top: 18px;
+            padding-top: 18px;
+        }
+
+        .details.show {
+            display: block;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-gray);
+            border-radius: 7px;
+            font: inherit;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .danger-btn {
+            border-color: #dc3545 !important;
+            color: #dc3545 !important;
+        }
+
+        .danger-btn:hover {
+            background: #dc3545 !important;
+            color: white !important;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="navbar">
+
+        <div class="navbar-brand">
+            🏢 MERD Admin
+        </div>
+
+        <div class="navbar-cta">
+
+            <a
+                href="admin-dashboard.html"
+                class="btn btn-outline">
+                Dashboard
+            </a>
+
+            <a
+                href="admin-properties.html"
+                class="btn btn-outline">
+                Properties
+            </a>
+
+            <a
+                href="admin-submissions.html"
+                class="btn btn-outline">
+                Submissions
+            </a>
+
+            <button
+                class="btn btn-secondary"
+                onclick="logout()">
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="container mt-xl mb-xl">
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>Buyer Management</h1>
+
+            <p class="text-secondary">
+                Manage registered buyers and their property
+                requirements.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="Search buyers by name, email or phone..."
+            oninput="filterBuyers()">
+
+    </div>
+
+
+    <div id="buyersContainer">
+
+        <div class="card empty">
+            Loading buyers...
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- EDIT BUYER MODAL -->
+
+<div
+    id="editModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Edit Buyer</h2>
+
+            <button
+                class="btn btn-outline"
+                onclick="closeEditModal()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <form id="editBuyerForm">
+
+            <input
+                type="hidden"
+                id="editBuyerId">
+
+
+            <div class="form-group">
+
+                <label for="editName">
+                    Name
+                </label>
+
+                <input
+                    type="text"
+                    id="editName"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editPhone">
+                    Phone
+                </label>
+
+                <input
+                    type="text"
+                    id="editPhone"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="editEmail"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editLocations">
+                    Preferred Locations
+                </label>
+
+                <textarea
+                    id="editLocations"
+                    rows="3"></textarea>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editBudget">
+                    Budget
+                </label>
+
+                <input
+                    type="number"
+                    id="editBudget"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editPurpose">
+                    Purchase Purpose
+                </label>
+
+                <input
+                    type="text"
+                    id="editPurpose">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editTimeline">
+                    Timeline
+                </label>
+
+                <input
+                    type="text"
+                    id="editTimeline">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editFinancing">
+                    Financing Status
+                </label>
+
+                <input
+                    type="text"
+                    id="editFinancing">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editPropertyType">
+                    Preferred Property Type
+                </label>
+
+                <input
+                    type="text"
+                    id="editPropertyType">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editStatus">
+                    Status
+                </label>
+
+                <select id="editStatus">
+
+                    <option value="new">
+                        New
+                    </option>
+
+                    <option value="contacted">
+                        Contacted
+                    </option>
+
+                    <option value="qualified">
+                        Qualified
+                    </option>
+
+                    <option value="closed">
+                        Closed
+                    </option>
+
+                    <option value="lost">
+                        Lost
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editNotes">
+                    Internal Notes
+                </label>
+
+                <textarea
+                    id="editNotes"
+                    rows="5"></textarea>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-outline"
+                    onclick="closeEditModal()">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+
+
+<script>
+
+let allBuyers = [];
+
+
+// =====================================================
+// LOAD BUYERS
+// =====================================================
+
+async function loadBuyers() {
+
+    const container =
+        document.getElementById(
+            'buyersContainer'
+        );
+
+    container.innerHTML = `
+        <div class="card empty">
+            Loading buyers...
+        </div>
+    `;
+
+
+    try {
+
+        await requireAuth();
+
+
+        const buyers =
+            await api.get(
+                '/admin/buyers'
+            );
+
+
+        allBuyers =
+            Array.isArray(buyers)
+                ? buyers
+                : [];
+
+
+        renderBuyers(
+            allBuyers
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+            <div class="card empty">
+
+                <h3>
+                    Unable to load buyers
+                </h3>
+
+                <p class="text-secondary">
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </p>
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// RENDER BUYERS
+// =====================================================
+
+function renderBuyers(
+    buyers
+) {
+
+    const container =
+        document.getElementById(
+            'buyersContainer'
+        );
+
+
+    if (
+        !buyers ||
+        buyers.length === 0
+    ) {
+
+        container.innerHTML = `
+            <div class="card empty">
+
+                <h3>
+                    No buyers found
+                </h3>
+
+                <p class="text-secondary">
+                    No buyer records are currently
+                    available.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        buyers
+            .map(renderBuyer)
+            .join('');
+
+}
+
+
+// =====================================================
+// RENDER BUYER CARD
+// =====================================================
+
+function renderBuyer(
+    buyer
+) {
+
+    const budget =
+        buyer.budget != null
+            ? formatCurrency(
+                Number(
+                    buyer.budget
+                )
+              )
+            : 'Not provided';
+
+
+    const status =
+        buyer.status || 'new';
+
+
+    return `
+
+        <div class="buyer-card">
+
+            <div class="buyer-header">
+
+                <div>
+
+                    <h2>
+                        ${escapeHtml(
+                            buyer.name
+                        )}
+                    </h2>
+
+                    <p class="text-secondary">
+
+                        ${escapeHtml(
+                            buyer.email
+                        )}
+
+                    </p>
+
+                </div>
+
+
+                <span
+                    class="status status-${escapeHtml(
+                        status
+                    )}">
+
+                    ${escapeHtml(
+                        status
+                    )}
+
+                </span>
+
+            </div>
+
+
+            <div class="buyer-meta">
+
+                <div class="meta-box">
+
+                    <small>
+                        Phone
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            buyer.phone
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <small>
+                        Budget
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            budget
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <small>
+                        Property Type
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            buyer.preferred_property_type ||
+                            'Not provided'
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <small>
+                        Timeline
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            buyer.timeline ||
+                            'Not provided'
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn btn-outline"
+                    onclick="toggleDetails(
+                        ${buyer.id}
+                    )">
+
+                    View Details
+
+                </button>
+
+
+                <button
+                    class="btn btn-outline"
+                    onclick="openEditModal(
+                        ${buyer.id}
+                    )">
+
+                    Edit
+
+                </button>
+
+
+                <button
+                    class="btn btn-outline danger-btn"
+                    onclick="deleteBuyer(
+                        ${buyer.id}
+                    )">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="details-${buyer.id}"
+                class="details">
+
+                <div class="details-grid">
+
+                    <div>
+
+                        <strong>
+                            Email
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                buyer.email ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Phone
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                buyer.phone ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Preferred Locations
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                buyer.preferred_locations ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Purchase Purpose
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                buyer.purchase_purpose ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Financing Status
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                buyer.financing_status ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Property Type
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                buyer.preferred_property_type ||
+                                'Not provided'
+                            )}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div style="margin-top:15px;">
+
+                    <strong>
+                        Internal Notes
+                    </strong>
+
+                    <p>
+                        ${escapeHtml(
+                            buyer.internal_notes ||
+                            'No internal notes.'
+                        )}
+                    </p>
+
+                </div>
+
+
+                <div class="contact-links">
+
+                    <a
+                        href="tel:${escapeHtml(
+                            buyer.phone || ''
+                        )}"
+                        class="btn btn-outline">
+
+                        📞 Call
+
+                    </a>
+
+
+                    <a
+                        href="mailto:${escapeHtml(
+                            buyer.email || ''
+                        )}"
+                        class="btn btn-outline">
+
+                        ✉️ Email
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+// =====================================================
+// TOGGLE DETAILS
+// =====================================================
+
+function toggleDetails(
+    id
+) {
+
+    const element =
+        document.getElementById(
+            `details-${id}`
+        );
+
+
+    if (element) {
+
+        element.classList.toggle(
+            'show'
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// SEARCH
+// =====================================================
+
+function filterBuyers() {
+
+    const search =
+        document.getElementById(
+            'searchInput'
+        ).value
+        .trim()
+        .toLowerCase();
+
+
+    if (!search) {
+
+        renderBuyers(
+            allBuyers
+        );
+
+        return;
+
+    }
+
+
+    const filtered =
+        allBuyers.filter(
+            buyer => {
+
+                return [
+
+                    buyer.name,
+
+                    buyer.email,
+
+                    buyer.phone,
+
+                    buyer.preferred_locations,
+
+                    buyer.preferred_property_type,
+
+                    buyer.status
+
+                ]
+                .some(
+                    value =>
+                        String(
+                            value || ''
+                        )
+                        .toLowerCase()
+                        .includes(search)
+                );
+
+            }
+        );
+
+
+    renderBuyers(
+        filtered
+    );
+
+}
+
+
+// =====================================================
+// OPEN EDIT MODAL
+// =====================================================
+
+async function openEditModal(
+    id
+) {
+
+    try {
+
+        const buyer =
+            await api.get(
+                `/admin/buyers/${id}`
+            );
+
+
+        document.getElementById(
+            'editBuyerId'
+        ).value =
+            buyer.id;
+
+
+        document.getElementById(
+            'editName'
+        ).value =
+            buyer.name || '';
+
+
+        document.getElementById(
+            'editPhone'
+        ).value =
+            buyer.phone || '';
+
+
+        document.getElementById(
+            'editEmail'
+        ).value =
+            buyer.email || '';
+
+
+        document.getElementById(
+            'editLocations'
+        ).value =
+            buyer.preferred_locations || '';
+
+
+        document.getElementById(
+            'editBudget'
+        ).value =
+            buyer.budget || '';
+
+
+        document.getElementById(
+            'editPurpose'
+        ).value =
+            buyer.purchase_purpose || '';
+
+
+        document.getElementById(
+            'editTimeline'
+        ).value =
+            buyer.timeline || '';
+
+
+        document.getElementById(
+            'editFinancing'
+        ).value =
+            buyer.financing_status || '';
+
+
+        document.getElementById(
+            'editPropertyType'
+        ).value =
+            buyer.preferred_property_type || '';
+
+
+        document.getElementById(
+            'editStatus'
+        ).value =
+            buyer.status || 'new';
+
+
+        document.getElementById(
+            'editNotes'
+        ).value =
+            buyer.internal_notes || '';
+
+
+        document.getElementById(
+            'editModal'
+        ).classList.add(
+            'show'
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showNotification(
+            'Failed to load buyer.',
+            'danger'
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// CLOSE MODAL
+// =====================================================
+
+function closeEditModal() {
+
+    document.getElementById(
+        'editModal'
+    ).classList.remove(
+        'show'
+    );
+
+}
+
+
+// =====================================================
+// SAVE BUYER
+// =====================================================
+
+document.getElementById(
+    'editBuyerForm'
+).addEventListener(
+    'submit',
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const id =
+            document.getElementById(
+                'editBuyerId'
+            ).value;
+
+
+        try {
+
+            await api.patch(
+
+                `/admin/buyers/${id}`,
+
+                {
+
+                    name:
+                        document.getElementById(
+                            'editName'
+                        ).value.trim(),
+
+                    phone:
+                        document.getElementById(
+                            'editPhone'
+                        ).value.trim(),
+
+                    email:
+                        document.getElementById(
+                            'editEmail'
+                        ).value.trim(),
+
+                    preferredLocations:
+                        document.getElementById(
+                            'editLocations'
+                        ).value.trim(),
+
+                    budget:
+                        document.getElementById(
+                            'editBudget'
+                        ).value
+                        ?
+                        Number(
+                            document.getElementById(
+                                'editBudget'
+                            ).value
+                        )
+                        :
+                        null,
+
+                    purchasePurpose:
+                        document.getElementById(
+                            'editPurpose'
+                        ).value.trim(),
+
+                    timeline:
+                        document.getElementById(
+                            'editTimeline'
+                        ).value.trim(),
+
+                    financingStatus:
+                        document.getElementById(
+                            'editFinancing'
+                        ).value.trim(),
+
+                    preferredPropertyType:
+                        document.getElementById(
+                            'editPropertyType'
+                        ).value.trim(),
+
+                    status:
+                        document.getElementById(
+                            'editStatus'
+                        ).value,
+
+                    internalNotes:
+                        document.getElementById(
+                            'editNotes'
+                        ).value.trim()
+
+                }
+
+            );
+
+
+            closeEditModal();
+
+
+            showNotification(
+                'Buyer updated successfully.',
+                'success'
+            );
+
+
+            loadBuyers();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showNotification(
+                'Failed to update buyer.',
+                'danger'
+            );
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// DELETE BUYER
+// =====================================================
+
+async function deleteBuyer(
+    id
+) {
+
+    const confirmed =
+        confirm(
+            'Are you sure you want to delete this buyer? This action cannot be undone.'
+        );
+
+
+    if (!confirmed) return;
+
+
+    try {
+
+        await api.delete(
+            `/admin/buyers/${id}`
+        );
+
+
+        showNotification(
+            'Buyer deleted successfully.',
+            'success'
+        );
+
+
+        loadBuyers();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showNotification(
+            'Failed to delete buyer.',
+            'danger'
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// CLOSE MODAL OUTSIDE
+// =====================================================
+
+document.getElementById(
+    'editModal'
+).addEventListener(
+    'click',
+    function(event) {
+
+        if (
+            event.target === this
+        ) {
+
+            closeEditModal();
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// START
+// =====================================================
+
+document.addEventListener(
+    'DOMContentLoaded',
+    loadBuyers
+);
+
+</script>
+
+</body>
+</html>

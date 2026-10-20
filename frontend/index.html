@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MERD Landmark Properties - Property Acquisition & Investment Platform</title>
+  <meta name="description" content="MERD Landmark Properties helps investors, individuals, and businesses identify, evaluate, and acquire the right real-estate opportunities.">
+  <meta name="og:title" content="MERD Landmark Properties">
+  <meta name="og:description" content="Connecting Capital With the Right Property Opportunities">
+  <meta name="og:image" content="/images/og-image.jpg">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <div class="navbar">
+      <div class="navbar-brand">
+        <img src="images/merd-logo-blue.jpg" alt="MERD Landmark Properties Ltd" class="brand-logo">
+        <span>MERD Landmark Properties</span>
+      </div>
+      <button class="navbar-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+
+
+        
+      </button>
+      <nav class="navbar-menu">
+        <a href="index.html" class="active">HOME</a>
+        <a href="properties.html">PROPERTIES</a>
+        <a href="acquisition.html">ACQUISITION</a>
+        <a href="investment.html">INVESTMENTS</a>
+        <a href="submit-property.html">SUBMIT PROPERTY</a>
+        <a href="buyer-registration.html">REGISTER</a>
+        <a href="about.html">ABOUT</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+      <div class="navbar-cta">
+        <a href="buyer-registration.html" class="btn btn-primary">Register as Buyer</a>
+        <a href="submit-property.html" class="btn btn-gold">Submit Property</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Connecting Capital With the Right Property Opportunities</h1>
+      <p>We help investors, individuals, and businesses identify, evaluate, and acquire suitable real-estate opportunities with confidence and transparency.</p>
+      <div class="hero-cta">
+        <a href="properties.html" class="btn btn-gold btn-large">View Properties</a>
+        <a href="submit-property.html" class="btn btn-outline" style="color: white; border-color: white;">Submit a Property</a>
+        <a href="contact.html" class="btn btn-outline" style="color: white; border-color: white;">Speak With Our Team</a>
+      </div>
+    </div>
+  </section>
+
+<!-- Client Brand Showcase -->
+<section class="container-sm mt-xl mb-xl client-showcase">
+  <h2>Our Commitment</h2>
+  <p class="section-subtitle">
+    Helping clients make confident property decisions through verification,
+    conversation, and informed choices.
+  </p>
+
+  <div class="client-showcase-grid">
+    <img src="images/verify-land.jpg" alt="Before you buy land, verify">
+    <img src="images/property-conversation.jpg" alt="Your next property starts with a conversation">
+    <img src="images/real-estate-simpler.jpg" alt="Real estate, made simpler">
+  </div>
+</section>
+
+  <!-- Buy Side Section -->
+  <section class="container-sm mt-xl mb-xl">
+    <h2>For Buyers & Investors</h2>
+    <p class="section-subtitle">Whether you're looking to acquire investment property, expand your portfolio, or explore development opportunities, we connect you with curated opportunities.</p>
+    
+    <div class="row">
+      <div class="card">
+        <div class="card-header">🔍 Property Discovery</div>
+        <div class="card-body">
+          <p>Access a carefully curated marketplace of residential, commercial, industrial, and development opportunities sourced from trusted partners.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">📊 Research & Analysis</div>
+        <div class="card-body">
+          <p>Our team conducts thorough market analysis, valuation reviews, and opportunity assessment to help you make informed investment decisions.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">✅ Due Diligence Support</div>
+        <div class="card-body">
+          <p>We coordinate legal reviews, inspections, valuations, and documentation verification to streamline your acquisition process.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-xl">
+      <a href="buyer-registration.html" class="btn btn-primary btn-large">Register as a Buyer</a>
+    </div>
+  </section>
+
+  <!-- Supply Side Section -->
+  <section class="alternate mt-xl mb-xl">
+    <div class="container-sm">
+      <h2>For Property Suppliers</h2>
+      <p class="section-subtitle">Property owners, developers, agents, and brokers: reach qualified buyers and investors through our network.</p>
+      
+      <div class="row">
+        <div class="card">
+          <div class="card-header">🌐 Broad Buyer Network</div>
+          <div class="card-body">
+            <p>Your property is reviewed by our acquisition team and presented to a network of serious investors and buyers actively seeking opportunities.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">💼 Professional Management</div>
+          <div class="card-body">
+            <p>We handle inquiries, coordinate showings, and manage the acquisition process, saving you time and effort.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">🤝 Commission Flexibility</div>
+          <div class="card-body">
+            <p>Transparent commission structures and referral arrangements tailored to your needs.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-xl">
+        <a href="submit-property.html" class="btn btn-primary btn-large">Submit Your Property</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Properties Section -->
+  <section class="container-sm mt-xl mb-xl">
+    <h2>Featured Opportunities</h2>
+    <p class="section-subtitle">Explore some of our current listed opportunities</p>
+    <div class="row-3" id="featuredPropertiesContainer">
+      <!-- Properties will be loaded here via JavaScript -->
+      <div style="grid-column: 1 / -1; text-align: center;">
+        <div class="spinner" style="margin: 2rem auto;"></div>
+      </div>
+    </div>
+    <div class="text-center mt-xl">
+      <a href="properties.html" class="btn btn-primary btn-large">View All Properties</a>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="alternate mt-xl mb-xl">
+    <div class="container-sm">
+      <h2>Why Choose MERD Landmark Properties</h2>
+      <div class="row-2 mt-xl">
+        <div>
+          <h3>Access to Opportunities</h3>
+          <p>We build relationships with property owners, developers, and agents to provide access to both listed and off-market opportunities.</p>
+        </div>
+        <div>
+          <h3>Research-Driven Decisions</h3>
+          <p>We look beyond the asking price. We examine location, market value, potential returns, costs, and risks.</p>
+        </div>
+        <div>
+          <h3>Buyer-Focused Approach</h3>
+          <p>We understand what you need and source opportunities that fit your objectives, budget, and investment strategy.</p>
+        </div>
+        <div>
+          <h3>Professional Due Diligence</h3>
+          <p>We coordinate appropriate inspections, documentation reviews, valuations, and professional checks.</p>
+        </div>
+        <div>
+          <h3>Transparent Process</h3>
+          <p>Clients understand the opportunity, the numbers, the risks, and the transaction structure before committing capital.</p>
+        </div>
+        <div>
+          <h3>Long-Term Relationships</h3>
+          <p>We're not focused on one transaction. We aim to become a trusted acquisition partner for your portfolio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="container-sm mt-xl mb-xl">
+    <h2>Our Services</h2>
+    <div class="row">
+      <div class="card">
+        <div class="card-header">Property Acquisition</div>
+        <div class="card-body">
+          <p>Finding suitable properties based on your specific requirements, budget, and investment objectives.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Property Sourcing</div>
+        <div class="card-body">
+          <p>Connecting buyers with relevant on-market and potentially off-market opportunities from our extensive network.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Investment Analysis</div>
+        <div class="card-body">
+          <p>Comprehensive evaluation of acquisition economics, potential returns, risks, and market conditions.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Due Diligence Coordination</div>
+        <div class="card-body">
+          <p>Connecting transactions with appropriate legal, valuation, inspection, and professional services.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Transaction Support</div>
+        <div class="card-body">
+          <p>Coordinating the entire acquisition process between all relevant parties to ensure smooth completion.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Strategic Consulting</div>
+        <div class="card-body">
+          <p>Expert guidance on market trends, investment strategy, and portfolio optimization.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="hero mt-xl mb-xl">
+    <div class="hero-content">
+      <h2 style="color: white; margin-bottom: 1rem;">Ready to Find Your Next Opportunity?</h2>
+      <p style="font-size: 1.125rem; margin-bottom: 2rem;">Whether you're buying or selling, we're here to help you make the right decision.</p>
+      <div class="hero-cta">
+        <a href="properties.html" class="btn btn-gold btn-large">Browse Properties</a>
+        <a href="contact.html" class="btn btn-outline" style="color: white; border-color: white;">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>MERD Landmark Properties</h4>
+        <p>Connecting capital with the right property opportunities through research-driven, transparent real estate acquisition.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="properties.html">Properties</a>
+        <a href="buyer-registration.html">Register as Buyer</a>
+        <a href="submit-property.html">Submit Property</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p><strong>Phone:</strong></p>
+        <a href="tel:+2348100650205">+234 810 065 0205</a>
+        <a href="tel:+2349022245981">+234 902 224 5981</a>
+        <p class="mt-sm"><strong>Email:</strong></p>
+        <a href="mailto:connect@merdlandmarkproperties.com">connect@merdlandmarkproperties.com</a>
+        <p class="mt-sm"><strong>WhatsApp:</strong></p>
+        <a href="https://wa.me/2349076110391">Chat with us</a>
+                       <p class="mt-sm"><strong>Instagram:</strong></p>
+        <a href="https://www.instagram.com/merdlandmarkproperties?igsi=M2xmMXBsaDVnanFi">Connect Through Instagram</a>
+        <p class="mt-sm"><strong>Facebook:</strong></p>
+        <a href="https://www.facebook.com/share/19PWRNwPws/">Connect Through Facebook</a>
+      </div>
+      <div class="footer-section">
+        <h4>Company Promise</h4>
+        <p>"We don't simply show you properties. We help you understand the opportunity behind them."</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 MERD Landmark Properties Ltd. All rights reserved. | <a href="#" style="color: inherit;">Privacy Policy</a> | <a href="#" style="color: inherit;">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Load featured properties on homepage
+    async function loadFeaturedProperties() {
+      try {
+        const data = await api.get('/properties/featured');
+        const container = document.getElementById('featuredPropertiesContainer');
+        
+        if (!data || data.length === 0) {
+          container.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center;">
+              <p class="text-secondary">Featured properties will be available soon</p>
+            </div>
+          `;
+          return;
+        }
+        
+        container.innerHTML = data.map(property => `
+          <div class="card">
+            <div class="card-image" style="background-color: #e0e0e0; display: flex; align-items: center; justify-content: center;">
+              <span style="color: #999;">No Image</span>
+            </div>
+            <div class="card-header">${property.title}</div>
+            <div class="card-body">
+              <p><strong>Location:</strong> ${property.location}</p>
+              <p><strong>Price:</strong> <span class="font-weight-bold text-primary">${formatCurrency(property.price)}</span></p>
+              <p class="text-secondary" style="font-size: 0.9rem;">${property.description?.substring(0, 80)}...</p>
+            </div>
+            <div class="card-footer">
+              <a href="property-details.html?id=${property.id}" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Failed to load featured properties:', error);
+        document.getElementById('featuredPropertiesContainer').innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center;">
+            <p class="text-secondary">Unable to load featured properties at this time</p>
+          </div>
+        `;
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', loadFeaturedProperties);
+  </script>
+</body>
+</html>

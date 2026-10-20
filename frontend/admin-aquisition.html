@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Acquisition Requests | MERD Admin</title>
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            font: inherit;
+        }
+
+        .request-card {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .request-header h2 {
+            margin-bottom: 5px;
+        }
+
+        .request-meta {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .meta-box {
+            background: var(--light-blue);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .meta-box small {
+            display: block;
+            color: var(--gray-medium);
+            margin-bottom: 5px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-reviewing {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .details {
+            display: none;
+            border-top: 1px solid var(--border-gray);
+            margin-top: 18px;
+            padding-top: 18px;
+        }
+
+        .details.show {
+            display: block;
+        }
+
+        .notes-box {
+            background: var(--light-blue);
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            margin: 10px 0 20px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-gray);
+            border-radius: 7px;
+            font: inherit;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="navbar">
+
+        <div class="navbar-brand">
+            🏢 MERD Admin
+        </div>
+
+        <div class="navbar-cta">
+
+            <a
+                href="admin-dashboard.html"
+                class="btn btn-outline">
+                Dashboard
+            </a>
+
+            <a
+                href="admin-properties.html"
+                class="btn btn-outline">
+                Properties
+            </a>
+
+            <a
+                href="admin-buyers.html"
+                class="btn btn-outline">
+                Buyers
+            </a>
+
+            <button
+                class="btn btn-secondary"
+                onclick="logout()">
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<main class="container mt-xl mb-xl">
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>Acquisition Requests</h1>
+
+            <p class="text-secondary">
+                Manage property acquisition requests
+                submitted by buyers.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="Search buyer, property or request type..."
+            oninput="filterRequests()">
+
+    </div>
+
+
+    <div class="filters">
+
+        <button
+            class="btn btn-primary"
+            onclick="loadRequests()">
+            All
+        </button>
+
+        <button
+            class="btn btn-outline"
+            onclick="loadRequests('pending')">
+            Pending
+        </button>
+
+        <button
+            class="btn btn-outline"
+            onclick="loadRequests('reviewing')">
+            Reviewing
+        </button>
+
+        <button
+            class="btn btn-outline"
+            onclick="loadRequests('approved')">
+            Approved
+        </button>
+
+        <button
+            class="btn btn-outline"
+            onclick="loadRequests('rejected')">
+            Rejected
+        </button>
+
+        <button
+            class="btn btn-outline"
+            onclick="loadRequests('completed')">
+            Completed
+        </button>
+
+    </div>
+
+
+    <div id="requestsContainer">
+
+        <div class="card empty">
+            Loading acquisition requests...
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- UPDATE MODAL -->
+
+<div
+    id="editModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Update Request</h2>
+
+            <button
+                class="btn btn-outline"
+                onclick="closeEditModal()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <form id="editRequestForm">
+
+            <input
+                type="hidden"
+                id="editRequestId">
+
+
+            <div class="form-group">
+
+                <label for="editStatus">
+                    Status
+                </label>
+
+                <select id="editStatus">
+
+                    <option value="pending">
+                        Pending
+                    </option>
+
+                    <option value="reviewing">
+                        Reviewing
+                    </option>
+
+                    <option value="approved">
+                        Approved
+                    </option>
+
+                    <option value="rejected">
+                        Rejected
+                    </option>
+
+                    <option value="completed">
+                        Completed
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="editNotes">
+                    Internal Notes
+                </label>
+
+                <textarea
+                    id="editNotes"
+                    rows="6"
+                    placeholder="Add internal notes..."></textarea>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-outline"
+                    onclick="closeEditModal()">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+
+<script>
+
+let allRequests = [];
+
+let currentStatus = '';
+
+
+// =====================================================
+// LOAD REQUESTS
+// =====================================================
+
+async function loadRequests(status = '') {
+
+    currentStatus = status;
+
+    const container =
+        document.getElementById(
+            'requestsContainer'
+        );
+
+    container.innerHTML = `
+        <div class="card empty">
+            Loading acquisition requests...
+        </div>
+    `;
+
+    try {
+
+        await requireAuth();
+
+        let endpoint =
+            '/admin/acquisition-requests';
+
+        if (status) {
+
+            endpoint +=
+                `?status=${encodeURIComponent(status)}`;
+
+        }
+
+        const response =
+            await api.get(endpoint);
+
+        allRequests =
+            Array.isArray(response)
+                ? response
+                : (
+                    response.requests || []
+                );
+
+        renderRequests(
+            allRequests
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+            <div class="card empty">
+
+                <h3>
+                    Unable to load requests
+                </h3>
+
+                <p class="text-secondary">
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </p>
+
+            </div>
+        `;
+
+    }
+
+}
+
+
+// =====================================================
+// RENDER
+// =====================================================
+
+function renderRequests(requests) {
+
+    const container =
+        document.getElementById(
+            'requestsContainer'
+        );
+
+    if (
+        !requests ||
+        requests.length === 0
+    ) {
+
+        container.innerHTML = `
+            <div class="card empty">
+
+                <h3>
+                    No acquisition requests
+                </h3>
+
+                <p class="text-secondary">
+                    No requests match the current filter.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+    container.innerHTML =
+        requests
+            .map(renderRequest)
+            .join('');
+
+}
+
+
+// =====================================================
+// REQUEST CARD
+// =====================================================
+
+function renderRequest(request) {
+
+    const status =
+        request.status || 'pending';
+
+
+    const buyerName =
+        request.buyer_name ||
+        request.name ||
+        'Unknown buyer';
+
+
+    const propertyTitle =
+        request.property_title ||
+        'Property not specified';
+
+
+    const requestType =
+        request.request_type ||
+        'Acquisition';
+
+
+    return `
+
+        <div class="request-card">
+
+            <div class="request-header">
+
+                <div>
+
+                    <h2>
+                        ${escapeHtml(
+                            propertyTitle
+                        )}
+                    </h2>
+
+                    <p class="text-secondary">
+
+                        Buyer:
+                        ${escapeHtml(
+                            buyerName
+                        )}
+
+                    </p>
+
+                </div>
+
+
+                <span
+                    class="status status-${escapeHtml(
+                        status
+                    )}">
+
+                    ${escapeHtml(
+                        status
+                    )}
+
+                </span>
+
+            </div>
+
+
+            <div class="request-meta">
+
+                <div class="meta-box">
+
+                    <small>
+                        Request Type
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            requestType
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <small>
+                        Buyer Email
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            request.buyer_email ||
+                            request.email ||
+                            'Not provided'
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <small>
+                        Buyer Phone
+                    </small>
+
+                    <strong>
+                        ${escapeHtml(
+                            request.buyer_phone ||
+                            request.phone ||
+                            'Not provided'
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="meta-box">
+
+                    <small>
+                        Submitted
+                    </small>
+
+                    <strong>
+                        ${formatDate(
+                            request.created_at
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn btn-outline"
+                    onclick="toggleDetails(
+                        ${request.id}
+                    )">
+
+                    View Details
+
+                </button>
+
+
+                <button
+                    class="btn btn-outline"
+                    onclick="openEditModal(
+                        ${request.id}
+                    )">
+
+                    Update
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="details-${request.id}"
+                class="details">
+
+
+                <div class="request-meta">
+
+                    <div>
+
+                        <strong>
+                            Buyer ID
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                request.buyer_id ??
+                                'Not available'
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Property ID
+                        </strong>
+
+                        <p>
+                            ${escapeHtml(
+                                request.property_id ??
+                                'Not available'
+                            )}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <h4>
+                    Notes
+                </h4>
+
+
+                <div class="notes-box">
+
+                    ${escapeHtml(
+                        request.notes ||
+                        'No notes provided.'
+                    )}
+
+                </div>
+
+
+                <div class="actions">
+
+                    ${
+                        request.buyer_phone ||
+                        request.phone
+                        ?
+                        `
+                        <a
+                            href="tel:${escapeHtml(
+                                request.buyer_phone ||
+                                request.phone
+                            )}"
+                            class="btn btn-outline">
+
+                            📞 Call Buyer
+
+                        </a>
+                        `
+                        :
+                        ''
+                    }
+
+
+                    ${
+                        request.buyer_email ||
+                        request.email
+                        ?
+                        `
+                        <a
+                            href="mailto:${escapeHtml(
+                                request.buyer_email ||
+                                request.email
+                            )}"
+                            class="btn btn-outline">
+
+                            ✉️ Email Buyer
+
+                        </a>
+                        `
+                        :
+                        ''
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+// =====================================================
+// TOGGLE DETAILS
+// =====================================================
+
+function toggleDetails(id) {
+
+    const element =
+        document.getElementById(
+            `details-${id}`
+        );
+
+    if (element) {
+
+        element.classList.toggle(
+            'show'
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// SEARCH
+// =====================================================
+
+function filterRequests() {
+
+    const search =
+        document.getElementById(
+            'searchInput'
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    if (!search) {
+
+        renderRequests(
+            allRequests
+        );
+
+        return;
+
+    }
+
+
+    const filtered =
+        allRequests.filter(
+            request => {
+
+                return [
+
+                    request.buyer_name,
+
+                    request.name,
+
+                    request.buyer_email,
+
+                    request.email,
+
+                    request.buyer_phone,
+
+                    request.phone,
+
+                    request.property_title,
+
+                    request.request_type,
+
+                    request.status
+
+                ]
+                .some(
+                    value =>
+                        String(
+                            value || ''
+                        )
+                        .toLowerCase()
+                        .includes(search)
+                );
+
+            }
+        );
+
+
+    renderRequests(
+        filtered
+    );
+
+}
+
+
+// =====================================================
+// EDIT MODAL
+// =====================================================
+
+function openEditModal(id) {
+
+    const request =
+        allRequests.find(
+            item =>
+                Number(item.id) ===
+                Number(id)
+        );
+
+
+    if (!request) {
+
+        showNotification(
+            'Request not found.',
+            'danger'
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        'editRequestId'
+    ).value =
+        request.id;
+
+
+    document.getElementById(
+        'editStatus'
+    ).value =
+        request.status || 'pending';
+
+
+    document.getElementById(
+        'editNotes'
+    ).value =
+        request.notes || '';
+
+
+    document.getElementById(
+        'editModal'
+    ).classList.add(
+        'show'
+    );
+
+}
+
+
+// =====================================================
+// CLOSE MODAL
+// =====================================================
+
+function closeEditModal() {
+
+    document.getElementById(
+        'editModal'
+    ).classList.remove(
+        'show'
+    );
+
+}
+
+
+// =====================================================
+// UPDATE REQUEST
+// =====================================================
+
+document.getElementById(
+    'editRequestForm'
+).addEventListener(
+    'submit',
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const id =
+            document.getElementById(
+                'editRequestId'
+            ).value;
+
+
+        const status =
+            document.getElementById(
+                'editStatus'
+            ).value;
+
+
+        const notes =
+            document.getElementById(
+                'editNotes'
+            ).value.trim();
+
+
+        try {
+
+            await api.patch(
+
+                `/admin/acquisition-requests/${id}`,
+
+                {
+                    status,
+                    notes
+                }
+
+            );
+
+
+            closeEditModal();
+
+
+            showNotification(
+                'Acquisition request updated.',
+                'success'
+            );
+
+
+            loadRequests(
+                currentStatus
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showNotification(
+                'Failed to update request.',
+                'danger'
+            );
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// OUTSIDE MODAL CLICK
+// =====================================================
+
+document.getElementById(
+    'editModal'
+).addEventListener(
+    'click',
+    function(event) {
+
+        if (
+            event.target === this
+        ) {
+
+            closeEditModal();
+
+        }
+
+    }
+);
+
+
+// =====================================================
+// DATE
+// =====================================================
+
+function formatDate(date) {
+
+    if (!date) {
+
+        return 'Not available';
+
+    }
+
+
+    try {
+
+        return new Date(date)
+            .toLocaleDateString(
+                'en-NG',
+                {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                }
+            );
+
+    } catch {
+
+        return String(date);
+
+    }
+
+}
+
+
+// =====================================================
+// ESCAPE HTML
+// =====================================================
+
+function escapeHtml(value) {
+
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+
+}
+
+
+// =====================================================
+// START
+// =====================================================
+
+document.addEventListener(
+    'DOMContentLoaded',
+    loadRequests
+);
+
+</script>
+
+</body>
+</html>

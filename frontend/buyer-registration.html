@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buyer Registration - MERD Landmark Properties</title>
+  <meta name="description" content="Register as a buyer and receive curated property opportunities matched to your investment criteria.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <div class="navbar">
+      <div class="navbar-brand">🏢 MERD Landmark Properties</div>
+      <button class="navbar-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="navbar-menu">
+        <a href="index.html">HOME</a>
+        <a href="properties.html">PROPERTIES</a>
+        <a href="acquisition.html">ACQUISITION</a>
+        <a href="investment.html">INVESTMENTS</a>
+        <a href="submit-property.html">SUBMIT PROPERTY</a>
+        <a href="buyer-registration.html" class="active">REGISTER</a>
+        <a href="about.html">ABOUT</a>
+        <a href="contact.html">CONTACT</a>
+      </nav>
+      <div class="navbar-cta">
+        <a href="buyer-registration.html" class="btn btn-primary">Register as Buyer</a>
+        <a href="submit-property.html" class="btn btn-gold">Submit Property</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Register as a Buyer</h1>
+      <p>Join our network and receive curated property opportunities matched to your investment criteria</p>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <div class="container-sm mt-xl mb-xl">
+    <div class="card">
+      <div class="card-header">Buyer Registration</div>
+      <form id="buyerRegistrationForm" class="card-body">
+        <h3 class="mb-lg">Your Information</h3>
+        
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" class="form-control" id="name" placeholder="Your full name" required>
+        </div>
+        
+        <div class="row-2">
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <input type="tel" class="form-control" id="phone" placeholder="+234 800 000 0000" required>
+          </div>
+        </div>
+        
+        <hr style="margin: 2rem 0;">
+        <h3 class="mb-lg">Investment Criteria</h3>
+        
+        <div class="form-group">
+          <label class="form-label">Preferred Property Types *</label>
+          <select class="form-control" id="preferredPropertyType" required>
+            <option value="">Select property type</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Land">Land</option>
+            <option value="Industrial">Industrial</option>
+            <option value="Mixed-use">Mixed-use</option>
+            <option value="Development opportunity">Development Opportunity</option>
+            <option value="Investment opportunity">Investment Opportunity</option>
+            <option value="Any">Open to any type</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Preferred Locations</label>
+          <input type="text" class="form-control" id="preferredLocations" placeholder="e.g., Lagos, Abuja, Port Harcourt (comma-separated)">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Budget Range (₦) *</label>
+          <input type="number" class="form-control" id="budget" placeholder="Minimum budget in Naira" step="0.01" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Purchase Purpose *</label>
+          <select class="form-control" id="purchasePurpose" required>
+            <option value="">Select purpose</option>
+            <option value="Owner-occupancy">Owner-occupancy</option>
+            <option value="Investment">Investment/Rental Income</option>
+            <option value="Resale">Resale/Flip</option>
+            <option value="Development">Development</option>
+            <option value="Corporate">Corporate/Business</option>
+            <option value="Mixed">Mixed Purpose</option>
+          </select>
+        </div>
+        
+        <div class="row-2">
+          <div class="form-group">
+            <label class="form-label">Timeline *</label>
+            <select class="form-control" id="timeline" required>
+              <option value="">Select timeline</option>
+              <option value="Immediate">Immediate (0-3 months)</option>
+              <option value="Short-term">Short-term (3-6 months)</option>
+              <option value="Medium-term">Medium-term (6-12 months)</option>
+              <option value="Long-term">Long-term (12+ months)</option>
+              <option value="Flexible">Flexible</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Financing Status *</label>
+            <select class="form-control" id="financingStatus" required>
+              <option value="">Select financing status</option>
+              <option value="Cash-ready">Cash Ready</option>
+              <option value="Securing-financing">Securing Financing</option>
+              <option value="Financing-approved">Financing Approved</option>
+              <option value="Partnership">Looking for Partnership</option>
+            </select>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-large" style="width: 100%; margin-top: 1rem;">Complete Registration</button>
+        <p class="text-secondary" style="font-size: 0.9rem; margin-top: 1rem; text-align: center;">Our acquisition team will contact you shortly with matching opportunities</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>MERD Landmark Properties</h4>
+        <p>Connecting capital with the right property opportunities through research-driven, transparent real estate acquisition.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="properties.html">Properties</a>
+        <a href="buyer-registration.html">Register as Buyer</a>
+        <a href="submit-property.html">Submit Property</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p><strong>Phone:</strong></p>
+        <a href="tel:+2348100650205">+234 810 065 0205</a>
+        <a href="tel:+2349022245981">+234 902 224 5981</a>
+        <p class="mt-sm"><strong>Email:</strong></p>
+        <a href="mailto:connect@merdlandmarkproperties.com">connect@merdlandmarkproperties.com</a>
+                       <p class="mt-sm"><strong>Instagram:</strong></p>
+        <a href="https://www.instagram.com/merdlandmarkproperties?igsi=M2xmMXBsaDVnanFi">Connect Through Instagram</a>
+        <p class="mt-sm"><strong>Facebook:</strong></p>
+        <a href="https://www.facebook.com/share/19PWRNwPws/">Connect Through Facebook</a>
+      </div>
+      <div class="footer-section">
+        <h4>Company Promise</h4>
+        <p>"We don't simply show you properties. We help you understand the opportunity behind them."</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 MERD Landmark Properties Ltd. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/buyer-registration.js"></script>
+</body>
+</html>

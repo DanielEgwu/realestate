@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - MERD Landmark Properties</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <div class="navbar">
+      <div class="navbar-brand">🏢 MERD Admin</div>
+      <div class="navbar-cta">
+        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container mt-xl mb-xl">
+    <h1>Admin Dashboard</h1>
+    
+    <div class="row-3 mt-lg mb-xl" id="statsContainer">
+      <div class="card">
+        <div class="card-header">Published Properties</div>
+        <div class="card-body" style="font-size: 2rem; font-weight: bold; color: var(--primary-blue);">-</div>
+      </div>
+      <div class="card">
+        <div class="card-header">Pending Submissions</div>
+        <div class="card-body" style="font-size: 2rem; font-weight: bold; color: var(--warning);">-</div>
+      </div>
+      <div class="card">
+        <div class="card-header">Total Buyers</div>
+        <div class="card-body" style="font-size: 2rem; font-weight: bold; color: var(--success);">-</div>
+      </div>
+      <div class="card">
+        <div class="card-header">New Investment Ops</div>
+        <div class="card-body" style="font-size: 2rem; font-weight: bold; color: var(--info);">-</div>
+      </div>
+      <div class="card">
+        <div class="card-header">New Enquiries</div>
+        <div class="card-body" style="font-size: 2rem; font-weight: bold; color: var(--danger);">-</div>
+      </div>
+    </div>
+
+    <div class="row-2 mt-xl">
+      <!-- Submissions Management -->
+      <div>
+        <div class="card">
+          <div class="card-header">Recent Property Submissions</div>
+          <div id="submissionsContainer" class="card-body">
+            <p class="text-secondary">Loading...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div>
+        <div class="card">
+          <div class="card-header">Quick Actions</div>
+          <div class="card-body">
+            <a href="admin-properties.html" class="btn btn-primary" style="width: 100%; display: block; margin-bottom: 0.5rem;">Manage Properties</a>
+            <a href="admin-submissions.html" class="btn btn-primary" style="width: 100%; display: block; margin-bottom: 0.5rem;">Review Submissions</a>
+            <a href="admin-buyers.html" class="btn btn-primary" style="width: 100%; display: block; margin-bottom: 0.5rem;">View Buyers</a>
+            <a href="admin-investments.html" class="btn btn-primary" style="width: 100%; display: block;">Investment Opportunities</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/utils.js"></script>
+  <script>
+    async function loadDashboard() {
+      try {
+        await requireAuth();
+        
+        const stats = await api.get('/admin/dashboard');
+        const submissions = await api.get('/admin/submissions?status=pending');
+        
+        // Update stats
+        const statElements = document.querySelectorAll('#statsContainer .card-body');
+        statElements[0].textContent = stats.publishedProperties;
+        statElements[1].textContent = stats.pendingSubmissions;
+        statElements[2].textContent = stats.totalBuyers;
+        statElements[3].textContent = stats.newInvestments;
+        statElements[4].textContent = stats.newEnquiries;
+        
+        // Update submissions
+        const container = document.getElementById('submissionsContainer');
+        if (submissions.length === 0) {
+          container.innerHTML = '<p class="text-secondary">No pending submissions</p>';
+          return;
+        }
+        
+        container.innerHTML = submissions.slice(0, 5).map(sub => `
+          <div style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-gray);">
+            <p style="margin-bottom: 0.25rem;"><strong>${sub.title}</strong></p>
+            <p style="margin-bottom: 0.25rem; font-size: 0.9rem; color: var(--gray-medium);">${sub.location} • ${formatCurrency(sub.asking_price)}</p>
+            <p style="margin: 0; font-size: 0.85rem;"><span class="badge badge-warning">${sub.status}</span></p>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Dashboard load error:', error);
+        showNotification('Failed to load dashboard', 'danger');
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', loadDashboard);
+  </script>
+</body>
+</html>

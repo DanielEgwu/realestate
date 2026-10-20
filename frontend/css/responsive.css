@@ -1,0 +1,146 @@
+/* Mobile First Responsive Design */
+
+@media (max-width: 768px) {
+  :root {
+    --font-size-xxxl: 1.75rem;
+    --font-size-xxl: 1.5rem;
+    --font-size-xl: 1.25rem;
+    --spacing-xxl: 2rem;
+    --spacing-xl: 1.5rem;
+  }
+
+  .container {
+    padding: 0 var(--spacing-md);
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+
+  .navbar-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-gray);
+    padding: var(--spacing-md) var(--spacing-lg);
+    gap: var(--spacing-md);
+    width: 100%;
+  }
+
+  .navbar-menu.active {
+    display: flex;
+  }
+
+  .navbar-toggle {
+    display: flex;
+  }
+
+  .navbar-cta {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+  }
+
+  .navbar-cta .btn {
+    width: 100%;
+  }
+
+  .row,
+  .row-2,
+  .row-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero p {
+    font-size: var(--font-size-base);
+  }
+
+  .hero-cta {
+    flex-direction: column;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+  }
+
+  section {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .btn-large {
+    padding: var(--spacing-md) var(--spacing-lg);
+    width: 100%;
+  }
+
+  .card {
+    padding: var(--spacing-md);
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .navbar-menu a {
+    display: block;
+    padding: var(--spacing-sm) 0;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --font-size-xxxl: 1.5rem;
+    --font-size-xxl: 1.25rem;
+    --font-size-xl: 1rem;
+    --spacing-lg: 1rem;
+    --spacing-md: 1rem;
+  }
+
+  h1 {
+    font-size: var(--font-size-xxl);
+  }
+
+  h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  .hero {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .navbar-brand {
+    font-size: var(--font-size-lg);
+  }
+
+  .card-image {
+    height: 200px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .row-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
