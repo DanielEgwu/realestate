@@ -13,10 +13,7 @@ const app = express();
 // PATHS
 // =====================================================
 
-const frontendDirectory = path.join(
-  __dirname,
-  '../frontend'
-);
+const frontendDirectory = path.join(__dirname, '../frontend'); // Keep this ONLY if server.js is inside the backend folder
 
 const uploadsDirectory = path.join(
   __dirname,
