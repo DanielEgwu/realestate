@@ -184,9 +184,13 @@ app.get('/sitemap.xml', async (req, res, next) => {
         : '';
       return `<url><loc>${escapeXml(publicOrigin + propertyPath(property))}</loc>${lastmod}</url>`;
     });
-    res.type('application/xml').send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${staticEntries.concat(propertyEntries).join('')}</urlset>`);
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${staticEntries.concat(propertyEntries).join('')}</urlset>`;
+    res.status(200).set('Content-Type', 'application/xml; charset=utf-8').send(sitemap);
   } catch (error) {
-    next(error);
+    console.error('Sitemap generation failed; serving the static sitemap:', error);
+    res.status(200)
+      .set('Content-Type', 'application/xml; charset=utf-8')
+      .send(fs.readFileSync(path.join(frontendDirectory, 'sitemap.xml')));
   }
 });
 
