@@ -30,7 +30,14 @@ router.get('/', async (req, res) => {
 
     // Build property query
     let query = `
-      SELECT *
+      SELECT properties.*,
+        (
+          SELECT image_url
+          FROM property_images
+          WHERE property_id = properties.id
+          ORDER BY display_order ASC, created_at ASC
+          LIMIT 1
+        ) AS image_url
       FROM properties
       WHERE status = $1
     `;
@@ -173,7 +180,14 @@ router.get('/featured', async (req, res) => {
   try {
     const result = await pool.query(
       `
-      SELECT *
+      SELECT properties.*,
+        (
+          SELECT image_url
+          FROM property_images
+          WHERE property_id = properties.id
+          ORDER BY display_order ASC, created_at ASC
+          LIMIT 1
+        ) AS image_url
       FROM properties
       WHERE status = $1
         AND featured = $2

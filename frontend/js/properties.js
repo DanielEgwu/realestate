@@ -49,21 +49,25 @@ function renderProperties(properties) {
     return;
   }
   
+  const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[character]);
+
   container.innerHTML = properties.map(property => `
     <div class="card">
-      <div class="card-image" style="background-color: #e0e0e0; display: flex; align-items: center; justify-content: center;">
-        <span style="color: #999;">No Image</span>
-      </div>
-      <div class="card-header">${property.title}</div>
+      ${property.image_url
+        ? `<img class="card-image" src="${escapeHtml(property.image_url)}" alt="${escapeHtml(property.title)} in ${escapeHtml(property.location)}" loading="lazy">`
+        : '<div class="card-image" style="background-color: #e0e0e0; display: flex; align-items: center; justify-content: center;"><span style="color: #999;">No Image</span></div>'}
+      <div class="card-header">${escapeHtml(property.title)}</div>
       <div class="card-body">
-        <p><strong>Location:</strong> ${property.location}</p>
-        <p><strong>Type:</strong> <span class="badge badge-primary">${property.property_type}</span></p>
+        <p><strong>Location:</strong> ${escapeHtml(property.location)}</p>
+        <p><strong>Type:</strong> <span class="badge badge-primary">${escapeHtml(property.property_type)}</span></p>
         <p><strong>Price:</strong> <span class="font-weight-bold text-primary">${formatCurrency(property.price)}</span></p>
-        ${property.size ? `<p><strong>Size:</strong> ${property.size} sqm</p>` : ''}
-        <p class="text-secondary" style="font-size: 0.9rem;">${property.description?.substring(0, 100)}...</p>
+        ${property.size ? `<p><strong>Size:</strong> ${escapeHtml(property.size)} sqm</p>` : ''}
+        <p class="text-secondary" style="font-size: 0.9rem;">${escapeHtml(property.description?.substring(0, 100))}...</p>
       </div>
       <div class="card-footer">
-        <a href="property-details.html?id=${property.id}" class="btn btn-primary">View Details</a>
+        <a href="/property/${encodeURIComponent(property.id)}" class="btn btn-primary">View Details</a>
       </div>
     </div>
   `).join('');

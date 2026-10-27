@@ -3,17 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MERD Landmark Properties - Property Acquisition & Investment Platform</title>
-  <meta name="description" content="MERD Landmark Properties helps investors, individuals, and businesses identify, evaluate, and acquire the right real-estate opportunities.">
-  <meta name="og:title" content="MERD Landmark Properties">
-  <meta name="og:description" content="Connecting Capital With the Right Property Opportunities">
-  <meta name="og:image" content="/images/og-image.jpg">
+  <title>Property Investment & Acquisition in Nigeria | MERD Landmark</title>
+  <meta name="description" content="Find verified property and investment opportunities across Nigeria with MERD Landmark Properties. Get research-driven acquisition support.">
+  <link rel="canonical" href="https://merdlandmarkproperties.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MERD Landmark Properties">
+  <meta property="og:title" content="Property Investment & Acquisition in Nigeria | MERD Landmark">
+  <meta property="og:description" content="Connecting capital with the right property opportunities across Nigeria.">
+  <meta property="og:url" content="https://merdlandmarkproperties.com/">
+  <meta property="og:image" content="https://merdlandmarkproperties.com/images/property-conversation.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Property Investment & Acquisition in Nigeria | MERD Landmark">
+  <meta name="twitter:description" content="Connecting capital with the right property opportunities across Nigeria.">
+  <meta name="twitter:image" content="https://merdlandmarkproperties.com/images/property-conversation.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"MERD Landmark Properties Ltd","url":"https://merdlandmarkproperties.com/","email":"connect@merdlandmarkproperties.com","telephone":["+2348100650205","+2349022245981"],"sameAs":["https://www.instagram.com/merdlandmarkproperties?igsi=M2xmMXBsaDVnanFi","https://www.facebook.com/share/19PWRNwPws/"]}</script>
   
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/responsive.css">
++  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9WZGE50BXW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9WZGE50BXW');
+  </script>
+
 </head>
 <body>
   <!-- Navigation -->
@@ -302,19 +320,23 @@
           return;
         }
         
+        const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[character]);
+
         container.innerHTML = data.map(property => `
           <div class="card">
-            <div class="card-image" style="background-color: #e0e0e0; display: flex; align-items: center; justify-content: center;">
-              <span style="color: #999;">No Image</span>
-            </div>
-            <div class="card-header">${property.title}</div>
+            ${property.image_url
+              ? `<img class="card-image" src="${escapeHtml(property.image_url)}" alt="${escapeHtml(property.title)} in ${escapeHtml(property.location)}" loading="lazy">`
+              : '<div class="card-image" style="background-color: #e0e0e0; display: flex; align-items: center; justify-content: center;"><span style="color: #999;">No Image</span></div>'}
+            <div class="card-header">${escapeHtml(property.title)}</div>
             <div class="card-body">
-              <p><strong>Location:</strong> ${property.location}</p>
+              <p><strong>Location:</strong> ${escapeHtml(property.location)}</p>
               <p><strong>Price:</strong> <span class="font-weight-bold text-primary">${formatCurrency(property.price)}</span></p>
-              <p class="text-secondary" style="font-size: 0.9rem;">${property.description?.substring(0, 80)}...</p>
+              <p class="text-secondary" style="font-size: 0.9rem;">${escapeHtml(property.description?.substring(0, 80))}...</p>
             </div>
             <div class="card-footer">
-              <a href="property-details.html?id=${property.id}" class="btn btn-primary">View Details</a>
+              <a href="/property/${encodeURIComponent(property.id)}" class="btn btn-primary">View Details</a>
             </div>
           </div>
         `).join('');
